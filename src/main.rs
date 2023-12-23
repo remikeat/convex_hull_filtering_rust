@@ -1,13 +1,6 @@
-use serde::Deserialize;
-
 extern crate convex_hull_filtering;
 use convex_hull_filtering::convex_hull::ConvexHull;
-
-#[derive(Debug, Deserialize)]
-struct ConvexHulls {
-    #[serde(alias = "convex hulls")]
-    convex_hulls: Vec<ConvexHull>,
-}
+use convex_hull_filtering::ConvexHulls;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
