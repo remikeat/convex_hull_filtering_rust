@@ -1,8 +1,7 @@
 use crate::edge::Edge;
 use crate::point::Point;
 use serde::Deserialize;
-
-const EPSILON: f64 = 1e-6;
+use std::f64::EPSILON;
 
 #[derive(Copy)]
 pub enum Direction {
@@ -82,7 +81,7 @@ impl ConvexHull {
                         }
                     }
                     cvx_inter.push(iter);
-                    if q_dot.belong_to_half_plane(p_dot.0) {
+                    if q_dot.belong_to_half_plane(p_dot.1) {
                         inside = WhichToAdvance::PPoly;
                     } else {
                         inside = WhichToAdvance::QPoly;
@@ -110,18 +109,18 @@ impl ConvexHull {
             match advance {
                 WhichToAdvance::NotInit => panic!("Case that shouldn't happen"),
                 WhichToAdvance::PPoly => {
-                    p_dot = iter_p.next().unwrap();
                     match inside {
                         WhichToAdvance::PPoly => cvx_inter.push(*p_dot.1),
                         _ => (),
                     };
+                    p_dot = iter_p.next().unwrap();
                 }
                 WhichToAdvance::QPoly => {
-                    q_dot = iter_q.next().unwrap();
                     match inside {
                         WhichToAdvance::QPoly => cvx_inter.push(*q_dot.1),
                         _ => (),
                     };
+                    q_dot = iter_q.next().unwrap();
                 }
             }
         }
@@ -162,8 +161,8 @@ impl<'a> Iterator for ConvexHullIterator<'a> {
 
     fn next(&mut self) -> Option<Self::Item> {
         let cur_pt = self.convex_hull.get_point(self.idx);
-        let next_pt = self.convex_hull.get_point(self.idx + self.direction as i32);
+        let prev_pt = self.convex_hull.get_point(self.idx - self.direction as i32);
         self.idx += self.direction as i32;
-        Some(Edge(cur_pt, next_pt))
+        Some(Edge(prev_pt, cur_pt))
     }
 }

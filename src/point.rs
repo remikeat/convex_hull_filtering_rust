@@ -1,3 +1,5 @@
+use std::f64::EPSILON;
+
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Copy)]
@@ -14,6 +16,6 @@ impl Clone for Point {
 
 impl PartialEq for Point {
     fn eq(&self, other: &Self) -> bool {
-        self.x == other.x && self.y == other.y
+        f64::abs(self.x - other.x) < EPSILON && f64::abs(self.y - other.y) < EPSILON
     }
 }

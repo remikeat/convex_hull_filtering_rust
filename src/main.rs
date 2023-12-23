@@ -9,6 +9,6 @@ fn main() {
     let convex_hulls: ConvexHulls = serde_json::from_reader(&file).unwrap();
     //println!("{:?}", convex_hulls.convex_hulls);
     let res =
-        ConvexHull::intersection(&convex_hulls.convex_hulls[5], &convex_hulls.convex_hulls[6]);
+        ConvexHull::intersection(&convex_hulls.convex_hulls[7], &convex_hulls.convex_hulls[8]);
     println!("{:?}", res);
 }

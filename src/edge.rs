@@ -1,6 +1,5 @@
 use crate::point::Point;
-
-const EPSILON: f64 = 1e-6;
+use std::f64::EPSILON;
 
 #[derive(Debug)]
 pub struct Edge<'a>(pub &'a Point, pub &'a Point);
