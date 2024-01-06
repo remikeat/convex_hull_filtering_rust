@@ -49,9 +49,15 @@ pub fn draw_convex_hulls(offset_x: f64, offset_y: f64, scale: f64, convex_hull: 
     for convex_hull in convex_hulls.convex_hulls.iter() {
         draw_convex_hull(&drawing_info, convex_hull, String::from("blue"));
     }
-    let (_, inter) =
-        ConvexHull::intersection(&convex_hulls.convex_hulls[1], &convex_hulls.convex_hulls[2]);
-    draw_convex_hull(&drawing_info, &inter, String::from("red"))
+    let convex_hulls = convex_hulls.convex_hulls;
+    for (index1, convex_hull1) in convex_hulls.iter().enumerate() {
+        for convex_hull2 in convex_hulls.iter().skip(index1 + 1) {
+            let (res, inter) = ConvexHull::intersection(&convex_hull1, &convex_hull2);
+            if res {
+                draw_convex_hull(&drawing_info, &inter, String::from("red"))
+            }
+        }
+    }
 }
 
 pub fn draw_convex_hull(drawing_info: &DrawingInfo, convex_hull: &ConvexHull, color: String) {

@@ -8,7 +8,11 @@ fn main() {
     let file = std::fs::File::open(filepath).unwrap();
     let convex_hulls: ConvexHulls = serde_json::from_reader(&file).unwrap();
     //println!("{:?}", convex_hulls.convex_hulls);
-    let res =
-        ConvexHull::intersection(&convex_hulls.convex_hulls[7], &convex_hulls.convex_hulls[8]);
-    println!("{:?}", res);
+    let convex_hulls = convex_hulls.convex_hulls;
+    for (index1, convex_hull1) in convex_hulls.iter().enumerate() {
+        for convex_hull2 in convex_hulls.iter().skip(index1 + 1) {
+            let res = ConvexHull::intersection(&convex_hull1, &convex_hull2);
+            println!("{:?}", res);
+        }
+    }
 }

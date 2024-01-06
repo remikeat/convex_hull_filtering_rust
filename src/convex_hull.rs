@@ -1,7 +1,7 @@
 use crate::edge::Edge;
 use crate::point::Point;
 use serde::Deserialize;
-use std::f64::EPSILON;
+const EPSILON: f64 = 1e-6;
 
 #[derive(Copy)]
 pub enum Direction {
